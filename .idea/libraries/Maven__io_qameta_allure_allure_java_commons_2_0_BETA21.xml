@@ -1,5 +1,8 @@
 <component name="libraryTable">
   <library name="Maven: io.qameta.allure:allure-java-commons:2.0-BETA21">
+    <ANNOTATIONS>
+      <root url="file://$PROJECT_DIR$/.." />
+    </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/io/qameta/allure/allure-java-commons/2.0-BETA21/allure-java-commons-2.0-BETA21.jar!/" />
     </CLASSES>
