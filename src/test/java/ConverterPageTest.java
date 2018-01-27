@@ -80,7 +80,7 @@ public class ConverterPageTest {
 
     @Test
     @Description("Конвертация валюты RUB-EUR")
-    public void ConvertCurrencyFromRUBToEURTest(){
+    public void convertCurrencyFromRUBToEURTest(){
         convertpage.clickCurrencyToField().chooseCurrencyTo(convertpage.toEUR);
         convertpage.enterSum("917.21");
         String expected = convertpage.changeSymbol(convertpage.getResult());
@@ -89,7 +89,7 @@ public class ConverterPageTest {
 
     @Test
     @Description("Конвертация валюты USD-RUB")
-    public void ConvertCurrencyFromUSDToRUBTest(){
+    public void convertCurrencyFromUSDToRUBTest(){
         convertpage.clickCurrencyFromField().chooseCurrencyFrom(convertpage.fromUSD);
         convertpage.clickCurrencyToField().chooseCurrencyTo(convertpage.toRUB);
         convertpage.enterSum("13");
@@ -99,12 +99,22 @@ public class ConverterPageTest {
 
     @Test
     @Description("Конвертация валюты GBP-EUR")
-    public void ConvertCurrencyFromGBPToEURTest(){
+    public void convertCurrencyFromGBPToEURTest(){
         convertpage.clickCurrencyFromField().chooseCurrencyFrom(convertpage.fromGBP);
         convertpage.clickCurrencyToField().chooseCurrencyTo(convertpage.toEUR);
-        convertpage.enterSum("100");
+        convertpage.enterSum("218");
         String expected = convertpage.changeSymbol(convertpage.getResult());
         Assert.assertEquals(expected, convertpage.getSumCalc("GBP", "EUR") + " " + convertpage.getCurrencyToValue());
+    }
+
+    @Test
+    @Description("Клик на кнопку 'Показать'") //не проходит
+    public void clickButtonTest(){
+        convertpage.clickButton(); //не кликает, тест фэйлится
+//        convertpage.enterSum("100"); //проверить с помощью ввода суммы и клика Enter
+        String textYouGet = convertpage.getYouGetText();
+        Assert.assertEquals("Вы получите:", textYouGet);
+        System.out.println(convertpage.getYouGetText() + " " +  convertpage.getEnteredSum() + " " + convertpage.getResult());
     }
 
     @After

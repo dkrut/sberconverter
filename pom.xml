@@ -83,5 +83,4 @@
         <!--<outputDirectory>${basedir}/allure-reports/</outputDirectory>-->
     </reporting>
 
-
 </project>

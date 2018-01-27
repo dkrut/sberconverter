@@ -15,6 +15,8 @@ public class ConverterPage {
     By currencyTo = By.xpath("//div[@class='rates-aside__filter-block-line']//div[@class='rates-aside__filter-block-line-right']//div[@class='select']//strong");
     By button = By.xpath("//button[@class='rates-button']");
     By sum = By.xpath("//input[@placeholder='Сумма']");
+    By youGetText = By.xpath("//span[@class='rates-converter-result__total-title']");
+    By enteredSum = By.xpath("//span[@class='rates-converter-result__total-from']");
     By result = By.xpath("//span[@class='rates-converter-result__total-to']");
     By buyPrice = By.xpath("//*[@id=\"main\"]/div/div/div/div/div/div/div/div[2]/div[2]/div/div/div/div[2]/div/div/div/div[1]/div/div[1]/table/tbody/tr[2]/td[2]/span/span[1]"); //изменить xpath(chrome copy)
     By salePrice = By.xpath("//*[@id=\"main\"]/div/div/div/div/div/div/div/div[2]/div[2]/div/div/div/div[2]/div/div/div/div[1]/div/div[1]/table/tbody/tr[2]/td[3]/span/span[1]"); //изменить xpath(chrome copy)
@@ -54,6 +56,14 @@ public class ConverterPage {
 
     public String getCurrencyToValue() { //вернуть значение поля валюты "в"
         return driver.findElement(currencyTo).getText();
+    }
+
+    public String getYouGetText() { //вернуть текст "Вы получите"
+        return driver.findElement(youGetText).getAttribute("innerText");
+    }
+
+    public String getEnteredSum() { //вернуть введённую сумму + валюту
+        return driver.findElement(enteredSum).getAttribute("innerText");
     }
 
     public String getResult() { //вернуть результат конвертации
