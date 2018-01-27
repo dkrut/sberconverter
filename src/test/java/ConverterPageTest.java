@@ -15,8 +15,8 @@ public class ConverterPageTest {
 
     @Before
     public void setUp(){
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\eskim\\Desktop\\Selenium_Tests\\SberConverter\\drivers\\chromedriver.exe");
-//        System.setProperty("webdriver.gecko.driver", "C:\\Users\\eskim\\Desktop\\Selenium_Tests\\SberConverter\\drivers\\geckodriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/webdrivers/chromedriver.exe");
+//        System.setProperty("webdriver.gecko.driver", "src/main/resources/webdrivers/geckodriver.exe");
 //        driver = new FirefoxDriver();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -114,7 +114,7 @@ public class ConverterPageTest {
 //        convertpage.enterSum("100"); //проверить с помощью ввода суммы и клика Enter
         String textYouGet = convertpage.getYouGetText();
         Assert.assertEquals("Вы получите:", textYouGet);
-        System.out.println(convertpage.getYouGetText() + " " +  convertpage.getEnteredSum() + " " + convertpage.getResult());
+//        System.out.println(convertpage.getYouGetText() + " " +  convertpage.getEnteredSum() + " " + convertpage.getResult());
     }
 
     @After

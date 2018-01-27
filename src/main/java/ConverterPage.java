@@ -135,17 +135,17 @@ public class ConverterPage {
         String getSalePriceWithPoint = changeSymbol(getSalePrice());
         Double sale = Double.parseDouble(getSalePriceWithPoint);
         Double sum = Double.parseDouble(getSum());
-        if (currencyFrom == "RUB" && currencyTo != "RUB") {
+        if (currencyFrom == "RUB" && currencyTo != "RUB") { //если конвертируем из RUB в иностранную валюту
             Double result = Math.rint(100 * (sum / sale)) / 100;
             return Double.toString(result);
-        } else if (currencyFrom != "RUB" && currencyTo != "RUB"){
+        } else if (currencyFrom != "RUB" && currencyTo != "RUB"){ //если конвертируем из иностранной валюты в иностранную
             String getBuyPriceInternationalWithPoint = changeSymbol(getBuyPriceInernational());
             String getSalePriceInternationalWithPoint = changeSymbol(getSalePriceInernational());
             Double buyInternational = Double.parseDouble(getBuyPriceInternationalWithPoint);
             Double saleInternational = Double.parseDouble(getSalePriceInternationalWithPoint);
             Double result = Math.rint(100 * (sum * buyInternational / saleInternational)) / 100;
             return Double.toString(result);
-        } else {
+        } else { // если конвертируем из иностранной в RUB
             String getBuyPriceWithPoint = changeSymbol(getBuyPrice());
             Double buy = Double.parseDouble(getBuyPriceWithPoint);
             Double result = Math.rint(100 * (sum * buy)) / 100;
@@ -153,4 +153,3 @@ public class ConverterPage {
         }
     }
 }
-
