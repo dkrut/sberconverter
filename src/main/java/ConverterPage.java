@@ -42,6 +42,14 @@ public class ConverterPage {
     By toUSD = By.xpath("//div[@class='visible']/span[contains(text(),'USD')]");
 
 
+//    By graphCNY = By.xpath("//h2[contains(text(),'Китайский юань')]");
+    By graphCHF = By.xpath("//h2[contains(text(),'Швейцарский франк')]");
+    By graphEUR = By.xpath("//h2[contains(text(),'Евро')]");
+    By graphGBR = By.xpath("//h2[contains(text(),'Фунт стерлингов Соединенного Королевства')]");
+    By graphJPY = By.xpath("//h2[contains(text(),'Японская иена')]");
+    By graphUSD = By.xpath("//h2[contains(text(),'Доллар США')]");
+
+
     public String getHeader() { //вернуть заголовок страницы
         return driver.findElement(header).getText();
     }
@@ -93,6 +101,26 @@ public class ConverterPage {
     public String changeSymbol(String needToChange) { //замена символа с "," на "."
         String newValue = needToChange.replace(",", ".");
         return newValue;
+    }
+
+    public String getGraphCHF() { //название графика при выборе CHF
+        return driver.findElement(graphCHF).getText();
+    }
+
+    public String getGraphEUR() { //название графика при выборе EUR
+        return driver.findElement(graphEUR).getText();
+    }
+
+    public String getGraphGBR() { //название графика при выборе GBR
+        return driver.findElement(graphGBR).getText();
+    }
+
+    public String getGraphJPY() { //название графика при выборе JPY
+        return driver.findElement(graphJPY).getText();
+    }
+
+    public String getGraphUSD() { //название графика при выборе USD
+        return driver.findElement(graphUSD).getText();
     }
 
     public ConverterPage enterSum(String number) { //ввести и отправить значение поля "Сумма"

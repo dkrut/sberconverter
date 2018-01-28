@@ -108,6 +108,17 @@ public class ConverterPageTest {
     }
 
     @Test
+    @Description("Получение названия графиков") //сделать метод в ConvertPage, чтобы сразу получать название графика
+    public void graphNameTest(){
+        String fromCurrency = "Фунт стерлингов Соединенного Королевства";
+        String toCurrency = "Евро";
+        convertpage.clickCurrencyFromField().chooseCurrencyFrom(convertpage.fromGBP);
+        convertpage.clickCurrencyToField().chooseCurrencyTo(convertpage.toEUR);
+        Assert.assertEquals(fromCurrency,convertpage.getGraphGBR());
+        Assert.assertEquals(toCurrency,convertpage.getGraphEUR());
+    }
+
+    @Test
     @Description("Клик на кнопку 'Показать'") //не проходит
     public void clickButtonTest(){
         convertpage.clickButton(); //не кликает, тест фэйлится
