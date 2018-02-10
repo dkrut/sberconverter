@@ -23,19 +23,21 @@ public class ConverterPage {
     By salePrice = By.xpath("//*[@id=\"main\"]/div/div/div/div/div/div/div/div[2]/div[2]/div/div/div/div[2]/div/div/div/div[1]/div/div[1]/table/tbody/tr[2]/td[3]/span/span[1]"); //изменить xpath(chrome copy)
     By buyPriceInernational = By.xpath("//*[@id=\"main\"]/div/div/div/div/div/div/div/div[2]/div[2]/div/div/div/div[2]/div/div/div/div[1]/div/div[1]/table/tbody/tr[2]/td[2]/span/span[1]"); //изменить xpath(chrome copy)
     By salePriceInernational = By.xpath("//*[@id=\"main\"]/div/div/div/div/div/div/div/div[2]/div[2]/div/div/div/div[2]/div/div/div/div[1]/div/div[1]/table/tbody/tr[3]/td[3]/span/span[1]"); //изменить xpath(chrome copy)
+    By tableQuotationsChange = By.xpath("//span[@class='rates-details__link rates-details__link_action_show-table']/span[@class='rates-details__link-text']");
+    By tableChangeName = By.xpath("//div[@class='modal-content']/h2");
 
-/*currency From*/
+    /*currency From*/
     By fromRUB = By.xpath("//div[@class='visible']/span[contains(text(),'RUB')]");
-//    By fromCNY = By.xpath("//div[@class='visible']/span[contains(text(),'CNY')]");
+    //    By fromCNY = By.xpath("//div[@class='visible']/span[contains(text(),'CNY')]");
     By fromCHF = By.xpath("//div[@class='visible']/span[contains(text(),'CHF')]");
     By fromEUR = By.xpath("//div[@class='visible']/span[contains(text(),'EUR')]");
     By fromGBP = By.xpath("//div[@class='visible']/span[contains(text(),'GBP')]");
     By fromJPY = By.xpath("//div[@class='visible']/span[contains(text(),'JPY')]");
     By fromUSD = By.xpath("//div[@class='visible']/span[contains(text(),'USD')]");
 
-/*currency To*/
+    /*currency To*/
     By toRUB = By.xpath("//div[@class='visible']/span[contains(text(),'RUB')]");
-//    By toCNY = By.xpath("//div[@class='visible']/span[contains(text(),'CNY')]");
+    //    By toCNY = By.xpath("//div[@class='visible']/span[contains(text(),'CNY')]");
     By toCHF = By.xpath("//div[@class='visible']/span[contains(text(),'CHF')]");
     By toEUR = By.xpath("//div[@class='visible']/span[contains(text(),'EUR')]");
     By toGBP = By.xpath("//div[@class='visible']/span[contains(text(),'GBP')]");
@@ -43,7 +45,7 @@ public class ConverterPage {
     By toUSD = By.xpath("//div[@class='visible']/span[contains(text(),'USD')]");
 
 
-//    By graphCNY = By.xpath("//h2[contains(text(),'Китайский юань')]");
+    //    By graphCNY = By.xpath("//h2[contains(text(),'Китайский юань')]");
     By graphCHF = By.xpath("//h2[contains(text(),'Швейцарский франк')]");
     By graphEUR = By.xpath("//h2[contains(text(),'Евро')]");
     By graphGBR = By.xpath("//h2[contains(text(),'Фунт стерлингов Соединенного Королевства')]");
@@ -124,7 +126,43 @@ public class ConverterPage {
         return driver.findElement(graphUSD).getText();
     }
 
+    public String getTableChangeName() {
+        return driver.findElement(tableChangeName).getText();
+    }
+
+    public String getSumCalc(String currencyFrom, String currencyTo) { //вычисление результата конвертации
+        String getSalePriceWithPoint = changeSymbol(getSalePrice());
+        Double sale = Double.parseDouble(getSalePriceWithPoint);
+        Double sum = Double.parseDouble(getSum());
+        if (currencyFrom == "RUB" && currencyTo != "RUB") { //если конвертируем из RUB в иностранную валюту
+            Double result = Math.rint(100 * (sum / sale)) / 100;
+            return Double.toString(result);
+        } else if (currencyFrom != "RUB" && currencyTo != "RUB") { //если конвертируем из иностранной валюты в иностранную
+            String getBuyPriceInternationalWithPoint = changeSymbol(getBuyPriceInernational());
+            String getSalePriceInternationalWithPoint = changeSymbol(getSalePriceInernational());
+            Double buyInternational = Double.parseDouble(getBuyPriceInternationalWithPoint);
+            Double saleInternational = Double.parseDouble(getSalePriceInternationalWithPoint);
+            Double result = Math.rint(100 * (sum * buyInternational / saleInternational)) / 100;
+            return Double.toString(result);
+        } else { // если конвертируем из иностранной в RUB
+            String getBuyPriceWithPoint = changeSymbol(getBuyPrice());
+            Double buy = Double.parseDouble(getBuyPriceWithPoint);
+            Double result = Math.rint(100 * (sum * buy)) / 100;
+            return Double.toString(result);
+        }
+    }
+
     public ConverterPage enterSum(String number) { //ввести и отправить значение поля "Сумма"
+        driver.findElement(sum).clear(); //почему-то не очищает значение с первого раза
+        driver.findElement(sum).clear();
+        driver.findElement(sum).clear();
+        driver.findElement(sum).clear();
+        driver.findElement(sum).clear();
+        driver.findElement(sum).sendKeys(number);
+        return this;
+    }
+
+    public ConverterPage enterSumAndSend(String number) { //ввести и отправить значение поля "Сумма"
         driver.findElement(sum).clear(); //почему-то не очищает значение с первого раза
         driver.findElement(sum).clear();
         driver.findElement(sum).clear();
@@ -161,25 +199,44 @@ public class ConverterPage {
         return this;
     }
 
-    public String getSumCalc(String currencyFrom, String currencyTo) { //вычисление результата конвертации
-        String getSalePriceWithPoint = changeSymbol(getSalePrice());
-        Double sale = Double.parseDouble(getSalePriceWithPoint);
-        Double sum = Double.parseDouble(getSum());
-        if (currencyFrom == "RUB" && currencyTo != "RUB") { //если конвертируем из RUB в иностранную валюту
-            Double result = Math.rint(100 * (sum / sale)) / 100;
-            return Double.toString(result);
-        } else if (currencyFrom != "RUB" && currencyTo != "RUB"){ //если конвертируем из иностранной валюты в иностранную
-            String getBuyPriceInternationalWithPoint = changeSymbol(getBuyPriceInernational());
-            String getSalePriceInternationalWithPoint = changeSymbol(getSalePriceInernational());
-            Double buyInternational = Double.parseDouble(getBuyPriceInternationalWithPoint);
-            Double saleInternational = Double.parseDouble(getSalePriceInternationalWithPoint);
-            Double result = Math.rint(100 * (sum * buyInternational / saleInternational)) / 100;
-            return Double.toString(result);
-        } else { // если конвертируем из иностранной в RUB
-            String getBuyPriceWithPoint = changeSymbol(getBuyPrice());
-            Double buy = Double.parseDouble(getBuyPriceWithPoint);
-            Double result = Math.rint(100 * (sum * buy)) / 100;
-            return Double.toString(result);
-        }
+    public ConverterPage clickAndChooseCurrencyFrom(String currencyFrom) {
+        clickCurrencyFromField();
+        if (currencyFrom == "RUB") {
+            return chooseCurrencyFrom(fromRUB);
+        } else if (currencyFrom == "CHF") {
+            return chooseCurrencyFrom(fromCHF);
+        } else if (currencyFrom == "EUR") {
+            return chooseCurrencyFrom(fromEUR);
+        } else if (currencyFrom == "GBP") {
+            return chooseCurrencyFrom(fromGBP);
+        } else if (currencyFrom == "JPY") {
+            return chooseCurrencyFrom(fromJPY);
+        } else return chooseCurrencyFrom(fromUSD);
+    }
+
+    public ConverterPage clickAndChooseCurrencyTo(String currencyTo) {
+        clickCurrencyToField();
+        if (currencyTo == "RUB") {
+            return chooseCurrencyTo(toRUB);
+        } else if (currencyTo == "CHF") {
+            return chooseCurrencyTo(toCHF);
+        } else if (currencyTo == "EUR") {
+            return chooseCurrencyTo(toEUR);
+        } else if (currencyTo == "GBP") {
+            return chooseCurrencyTo(toGBP);
+        } else if (currencyTo == "JPY") {
+            return chooseCurrencyTo(toJPY);
+        } else return chooseCurrencyTo(toUSD);
+    }
+
+    public ConverterPage clickAndChooseCurrencyFromTo(String currencyFrom, String currencyTo){
+        clickAndChooseCurrencyFrom(currencyFrom);
+        clickAndChooseCurrencyTo(currencyTo);
+        return this;
+    }
+
+    public ConverterPage clickTableQuotationsChange(){
+        driver.findElement(tableQuotationsChange).click();
+        return this;
     }
 }

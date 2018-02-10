@@ -56,18 +56,19 @@ public class ConverterPageTest {
     }
 
     @Test
-    @Description("тест выбора валюты JPY-GBP")
-    public void chooseCurrencyFromJPYToGBRTest(){
-        convertpage.clickCurrencyFromField().chooseCurrencyFrom(convertpage.fromJPY);
-        Assert.assertEquals("JPY", convertpage.getCurrencyFromValue());
-        convertpage.clickCurrencyToField().chooseCurrencyTo(convertpage.toGBP);
-        Assert.assertEquals("GBP", convertpage.getCurrencyToValue());
+    @Description("тест выбора валюты из <...> в <...>")
+    public void chooseCurrencyFromToTest(){
+        String currencyFrom = "JPY";
+        String currencyTo = "GBP";
+        convertpage.clickAndChooseCurrencyFromTo(currencyFrom, currencyTo);
+        Assert.assertEquals(currencyFrom, convertpage.getCurrencyFromValue());
+        Assert.assertEquals(currencyTo, convertpage.getCurrencyToValue());
     }
 
     @Test
     @Description("Проверка результата конвертации с валютой по умолчанию from RUB to USD")
     public void getResultTest(){
-        convertpage.enterSum("999");
+        convertpage.enterSumAndSend("999");
         String expected = convertpage.changeSymbol(convertpage.getResult());
         Assert.assertEquals(expected, convertpage.getSumCalc("RUB","USD") + " " + convertpage.getCurrencyToValue()); //actual = конвертировать Double обратно в String + прибавить к нему значение валюты
 //        System.out.println("ОР: " + expected);
@@ -75,32 +76,34 @@ public class ConverterPageTest {
     }
 
     @Test
-    @Description("Конвертация валюты RUB-EUR")
-    public void convertCurrencyFromRUBToEURTest(){
-        convertpage.clickCurrencyToField().chooseCurrencyTo(convertpage.toEUR);
-        convertpage.enterSum("917.21");
+    @Description("Конвертация валюты из RUB в <...>")
+    public void convertCurrencyFromRUBToTest(){
+        String currencyTo = "EUR";
+        convertpage.clickAndChooseCurrencyTo(currencyTo);
+        convertpage.enterSumAndSend("917.21");
         String expected = convertpage.changeSymbol(convertpage.getResult());
-        Assert.assertEquals(expected, convertpage.getSumCalc("RUB", "EUR") + " " + convertpage.getCurrencyToValue());
+        Assert.assertEquals(expected, convertpage.getSumCalc("RUB", currencyTo) + " " + convertpage.getCurrencyToValue());
     }
 
     @Test
-    @Description("Конвертация валюты USD-RUB")
-    public void convertCurrencyFromUSDToRUBTest(){
-        convertpage.clickCurrencyFromField().chooseCurrencyFrom(convertpage.fromUSD);
-        convertpage.clickCurrencyToField().chooseCurrencyTo(convertpage.toRUB);
-        convertpage.enterSum("13");
+    @Description("Конвертация валюты из <...> в RUB")
+    public void convertCurrencyFromToRUBTest(){
+        String currencyFrom = "USD";
+        convertpage.clickAndChooseCurrencyFromTo(currencyFrom, "RUB");
+        convertpage.enterSumAndSend("13");
         String expected = convertpage.changeSymbol(convertpage.getResult());
-        Assert.assertEquals(expected, convertpage.getSumCalc("USD","RUB") + " " + convertpage.getCurrencyToValue());
+        Assert.assertEquals(expected, convertpage.getSumCalc(currencyFrom,"RUB") + " " + convertpage.getCurrencyToValue());
     }
 
     @Test
-    @Description("Конвертация валюты GBP-EUR")
-    public void convertCurrencyFromGBPToEURTest(){
-        convertpage.clickCurrencyFromField().chooseCurrencyFrom(convertpage.fromGBP);
-        convertpage.clickCurrencyToField().chooseCurrencyTo(convertpage.toEUR);
-        convertpage.enterSum("218");
+    @Description("Конвертация валюты из <...> в <...>")
+    public void convertCurrencyFromToTest(){
+        String currencyFrom = "GBP";
+        String currencyTo = "EUR";
+        convertpage.clickAndChooseCurrencyFromTo(currencyFrom, currencyTo);
+        convertpage.enterSumAndSend("218");
         String expected = convertpage.changeSymbol(convertpage.getResult());
-        Assert.assertEquals(expected, convertpage.getSumCalc("GBP", "EUR") + " " + convertpage.getCurrencyToValue());
+        Assert.assertEquals(expected, convertpage.getSumCalc(currencyFrom, currencyTo) + " " + convertpage.getCurrencyToValue());
     }
 
     @Test
@@ -108,8 +111,7 @@ public class ConverterPageTest {
     public void graphNameTest(){
         String fromCurrency = "Фунт стерлингов Соединенного Королевства";
         String toCurrency = "Евро";
-        convertpage.clickCurrencyFromField().chooseCurrencyFrom(convertpage.fromGBP);
-        convertpage.clickCurrencyToField().chooseCurrencyTo(convertpage.toEUR);
+        convertpage.clickAndChooseCurrencyFromTo("GBP", "EUR");
         Assert.assertEquals(fromCurrency,convertpage.getGraphGBR());
         Assert.assertEquals(toCurrency,convertpage.getGraphEUR());
     }
@@ -118,9 +120,17 @@ public class ConverterPageTest {
     @Description("Клик на кнопку 'Показать'")
     public void clickButtonTest(){
         convertpage.clickButton();
-        String textYouGet = convertpage.getYouGetText();
-        Assert.assertEquals("Вы получите:", textYouGet);
+        Assert.assertEquals("Вы получите:", convertpage.getYouGetText());
 //        System.out.println(convertpage.getYouGetText() + " " +  convertpage.getEnteredSum() + " " + convertpage.getResult());
+    }
+
+    @Test
+    @Description("Открыть таблицу изменения котировок выбранной валюты")
+    public void openTableQuotationsChangeTest(){
+        String currencyTo = "EUR";
+        convertpage.clickAndChooseCurrencyTo(currencyTo);
+        convertpage.clickTableQuotationsChange();
+        Assert.assertEquals("Таблица изменения котировок, " + currencyTo, convertpage.getTableChangeName());
     }
 
     @After
