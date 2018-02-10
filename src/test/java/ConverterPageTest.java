@@ -68,7 +68,8 @@ public class ConverterPageTest {
     @Test
     @Description("Проверка результата конвертации с валютой по умолчанию from RUB to USD")
     public void getResultTest(){
-        convertpage.enterSumAndSend("999");
+        String sum = "9999,99";
+        convertpage.enterSumAndSend(sum);
         String expected = convertpage.changeSymbol(convertpage.getResult());
         Assert.assertEquals(expected, convertpage.getSumCalc("RUB","USD") + " " + convertpage.getCurrencyToValue()); //actual = конвертировать Double обратно в String + прибавить к нему значение валюты
 //        System.out.println("ОР: " + expected);
@@ -131,6 +132,14 @@ public class ConverterPageTest {
         convertpage.clickAndChooseCurrencyTo(currencyTo);
         convertpage.clickTableQuotationsChange();
         Assert.assertEquals("Таблица изменения котировок, " + currencyTo, convertpage.getTableChangeName());
+    }
+
+    @Test
+    @Description("Недоступен ввод символов, кроме цифр и точки/запятой")
+    public void inputValidationTest(){
+        String sum = "1,4";
+        convertpage.enterSum("!@#$%^&*()-+№;%:?_=" + sum);
+        Assert.assertEquals(sum, convertpage.getSum());
     }
 
     @After

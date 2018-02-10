@@ -1,6 +1,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class ConverterPage {
     private WebDriver driver;
@@ -85,6 +86,13 @@ public class ConverterPage {
         return driver.findElement(sum).getAttribute("Value");
     }
 
+    public String getSumWithoutSpace() { //вернуть значение поля "Сумма", удалив пробелы, а также заменив запятую на точку(для вычисления конвертации)
+        String sumValue = driver.findElement(sum).getAttribute("Value");
+        sumValue = sumValue.replaceAll("\\s","");
+        sumValue = sumValue.replace(",",".");
+        return sumValue;
+    }
+
     public String getBuyPrice() { //вернуть значение "Покупка"
         return driver.findElement(buyPrice).getText();
     }
@@ -133,7 +141,7 @@ public class ConverterPage {
     public String getSumCalc(String currencyFrom, String currencyTo) { //вычисление результата конвертации
         String getSalePriceWithPoint = changeSymbol(getSalePrice());
         Double sale = Double.parseDouble(getSalePriceWithPoint);
-        Double sum = Double.parseDouble(getSum());
+        Double sum = Double.parseDouble(getSumWithoutSpace());
         if (currencyFrom == "RUB" && currencyTo != "RUB") { //если конвертируем из RUB в иностранную валюту
             Double result = Math.rint(100 * (sum / sale)) / 100;
             return Double.toString(result);
@@ -152,23 +160,17 @@ public class ConverterPage {
         }
     }
 
-    public ConverterPage enterSum(String number) { //ввести и отправить значение поля "Сумма"
-        driver.findElement(sum).clear(); //почему-то не очищает значение с первого раза
-        driver.findElement(sum).clear();
-        driver.findElement(sum).clear();
-        driver.findElement(sum).clear();
-        driver.findElement(sum).clear();
-        driver.findElement(sum).sendKeys(number);
+    public ConverterPage enterSum(String number) { //ввести значение поля "Сумма" (не всегда очищает с первого раза, поэтому добавлены метода click() и clear())
+        WebElement sumValue = driver.findElement(sum);
+        sumValue.clear();
+        sumValue.click();
+        sumValue.clear();
+        sumValue.sendKeys(number);
         return this;
     }
 
     public ConverterPage enterSumAndSend(String number) { //ввести и отправить значение поля "Сумма"
-        driver.findElement(sum).clear(); //почему-то не очищает значение с первого раза
-        driver.findElement(sum).clear();
-        driver.findElement(sum).clear();
-        driver.findElement(sum).clear();
-        driver.findElement(sum).clear();
-        driver.findElement(sum).sendKeys(number);
+        enterSum(number);
         driver.findElement(sum).sendKeys(Keys.ENTER);
         return this;
     }
@@ -199,7 +201,7 @@ public class ConverterPage {
         return this;
     }
 
-    public ConverterPage clickAndChooseCurrencyFrom(String currencyFrom) {
+    public ConverterPage clickAndChooseCurrencyFrom(String currencyFrom) { //поправить метод для случаев, если добавится новая валюта
         clickCurrencyFromField();
         if (currencyFrom == "RUB") {
             return chooseCurrencyFrom(fromRUB);
@@ -214,7 +216,7 @@ public class ConverterPage {
         } else return chooseCurrencyFrom(fromUSD);
     }
 
-    public ConverterPage clickAndChooseCurrencyTo(String currencyTo) {
+    public ConverterPage clickAndChooseCurrencyTo(String currencyTo) { //поправить метод для случаев, если добавится новая валюта
         clickCurrencyToField();
         if (currencyTo == "RUB") {
             return chooseCurrencyTo(toRUB);
