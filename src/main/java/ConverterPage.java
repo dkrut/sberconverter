@@ -89,8 +89,7 @@ public class ConverterPage {
     public String getSumWithoutSpace() { //вернуть значение поля "Сумма", удалив пробелы, а также заменив запятую на точку(для вычисления конвертации)
         String sumValue = driver.findElement(sum).getAttribute("Value");
         sumValue = sumValue.replaceAll("\\s","");
-        sumValue = sumValue.replace(",",".");
-        return sumValue;
+        return changeSymbol(sumValue);
     }
 
     public String getBuyPrice() { //вернуть значение "Покупка"
@@ -160,11 +159,10 @@ public class ConverterPage {
         }
     }
 
-    public ConverterPage enterSum(String number) { //ввести значение поля "Сумма" (не всегда очищает с первого раза, поэтому добавлены метода click() и clear())
+    public ConverterPage enterSum(String number) { //ввести значение поля "Сумма" (не всегда очищает с первого раза, поэтому используется трёхкратное нажатие Backspace, чтобы удалить значение по умолчанию "100")
         WebElement sumValue = driver.findElement(sum);
-        sumValue.clear();
-        sumValue.click();
-        sumValue.clear();
+//        sumValue.clear();
+        sumValue.sendKeys("\b\b\b");
         sumValue.sendKeys(number);
         return this;
     }
