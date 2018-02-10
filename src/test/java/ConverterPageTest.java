@@ -30,34 +30,30 @@ public class ConverterPageTest {
     public void headerTest(){
         Assert.assertEquals("Калькулятор иностранных валют", convertpage.getHeader());
     }
+
     @Test
     @Description("Проверка названия Калькулятора")
     public void filterTitleTest(){
         Assert.assertEquals("Конвертация", convertpage.getfilterTitle());
     }
+
     @Test
     @Description("Проверка значения по умолчанию в поле 'Сумма'")
     public void defaultSumTest(){
         Assert.assertEquals("100", convertpage.getSum());
     }
+
     @Test
     @Description("'Конвертировать Из' по умолчанию")
     public void defaultCurrencyFromTest(){
         Assert.assertEquals("RUB", convertpage.getCurrencyFromValue());
     }
+
     @Test
     @Description("'Конвертировать В' по умолчанию")
     public void defaultCurrencyToTest(){
         Assert.assertEquals("USD", convertpage.getCurrencyToValue());
     }
-
-        //    @Test
-        //    @DisplayName("Проверка введённой суммы для конвертации") //лишний тест, можно удалить
-        //    public void enterSumTest(){
-        //        String sum = "200";
-        //        convertpage.enterSum(sum);
-        //        Assert.assertEquals(sum, convertpage.getSum());
-        //    }
 
     @Test
     @Description("тест выбора валюты JPY-GBP")
@@ -119,10 +115,9 @@ public class ConverterPageTest {
     }
 
     @Test
-    @Description("Клик на кнопку 'Показать'") //не проходит
+    @Description("Клик на кнопку 'Показать'")
     public void clickButtonTest(){
-        convertpage.clickButton(); //не кликает, тест фэйлится
-//        convertpage.enterSum("100"); //проверить с помощью ввода суммы и клика Enter
+        convertpage.clickButton();
         String textYouGet = convertpage.getYouGetText();
         Assert.assertEquals("Вы получите:", textYouGet);
 //        System.out.println(convertpage.getYouGetText() + " " +  convertpage.getEnteredSum() + " " + convertpage.getResult());

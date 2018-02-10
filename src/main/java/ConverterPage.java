@@ -9,6 +9,7 @@ public class ConverterPage {
         this.driver = driver;
     }
 
+    By closeCookiesMessage = By.xpath("//a[@class='kit-link kit-link_color_black personal-data-warning__close personal-data-warning__close_ru']");
     By header = By.xpath("//h1[@class='header_widget']");
     By filterTitle = By.xpath("//div[@class='kit-collapse__content'][1]/div[@class='rates-aside__filter-block rates-aside__filter-block_mode_converter'][1]//h6[@class='rates-aside__filter-title-text']");
     By currencyFrom = By.xpath("//div[@class='rates-aside__filter-block-line rates-aside__filter-block-line_field_converter-from']//div[@class='rates-aside__filter-block-line-right']//div[@class='select']//strong");
@@ -134,7 +135,8 @@ public class ConverterPage {
         return this;
     }
 
-    public ConverterPage clickButton() { //нажать на "Показать"(пока не выполняется, причина не ясна)
+    public ConverterPage clickButton() { //нажать на "Показать"
+        driver.findElement(closeCookiesMessage).click(); //закрыть сообщение об использовании cookies(мешает нажать на кнопку "Показать")
         driver.findElement(button).click();
         return this;
     }

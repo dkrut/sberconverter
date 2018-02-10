@@ -1,4 +1,6 @@
 .idea/
 target/
+.allure/
+allure-report/
 *.iml
 MainClass.java
