@@ -3,6 +3,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.text.DecimalFormat;
+
 public class ConverterPage {
     private WebDriver driver;
 
@@ -142,20 +144,23 @@ public class ConverterPage {
         Double sale = Double.parseDouble(getSalePriceWithPoint);
         Double sum = Double.parseDouble(getSumWithoutSpace());
         if (currencyFrom == "RUB" && currencyTo != "RUB") { //если конвертируем из RUB в иностранную валюту
-            Double result = Math.rint(100 * (sum / sale)) / 100;
-            return Double.toString(result);
+            Double result = sum / sale;
+            String doubleResult= new DecimalFormat("#0.00").format(result);
+            return changeSymbol(doubleResult);
         } else if (currencyFrom != "RUB" && currencyTo != "RUB") { //если конвертируем из иностранной валюты в иностранную
             String getBuyPriceInternationalWithPoint = changeSymbol(getBuyPriceInernational());
             String getSalePriceInternationalWithPoint = changeSymbol(getSalePriceInernational());
             Double buyInternational = Double.parseDouble(getBuyPriceInternationalWithPoint);
             Double saleInternational = Double.parseDouble(getSalePriceInternationalWithPoint);
-            Double result = Math.rint(100 * (sum * buyInternational / saleInternational)) / 100;
-            return Double.toString(result);
+            Double result = sum * buyInternational / saleInternational;
+            String doubleResult= new DecimalFormat("#0.00").format(result);
+            return changeSymbol(doubleResult);
         } else { // если конвертируем из иностранной в RUB
             String getBuyPriceWithPoint = changeSymbol(getBuyPrice());
             Double buy = Double.parseDouble(getBuyPriceWithPoint);
-            Double result = Math.rint(100 * (sum * buy)) / 100;
-            return Double.toString(result);
+            Double result = sum * buy;
+            String doubleResult= new DecimalFormat("#0.00").format(result);
+            return changeSymbol(doubleResult);
         }
     }
 
