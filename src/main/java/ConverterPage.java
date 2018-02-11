@@ -159,10 +159,11 @@ public class ConverterPage {
         }
     }
 
-    public ConverterPage enterSum(String number) { //ввести значение поля "Сумма" (не всегда очищает с первого раза, поэтому используется трёхкратное нажатие Backspace, чтобы удалить значение по умолчанию "100")
+    public ConverterPage enterSum(String number) { //ввести значение поля "Сумма" (не всегда очищает с первого раза, поэтому используется Ctrl+a и нажатие Backspace, чтобы удалить значение по умолчанию "100")
         WebElement sumValue = driver.findElement(sum);
-//        sumValue.clear();
-        sumValue.sendKeys("\b\b\b");
+        sumValue.sendKeys(Keys.CONTROL, "a");
+        sumValue.sendKeys(Keys.BACK_SPACE);
+//        sumValue.sendKeys("\b\b\b");
         sumValue.sendKeys(number);
         return this;
     }
@@ -211,7 +212,9 @@ public class ConverterPage {
             return chooseCurrencyFrom(fromGBP);
         } else if (currencyFrom == "JPY") {
             return chooseCurrencyFrom(fromJPY);
-        } else return chooseCurrencyFrom(fromUSD);
+        } else {
+            return chooseCurrencyFrom(fromUSD);
+        }
     }
 
     public ConverterPage clickAndChooseCurrencyTo(String currencyTo) { //поправить метод для случаев, если добавится новая валюта
@@ -226,7 +229,9 @@ public class ConverterPage {
             return chooseCurrencyTo(toGBP);
         } else if (currencyTo == "JPY") {
             return chooseCurrencyTo(toJPY);
-        } else return chooseCurrencyTo(toUSD);
+        } else {
+            return chooseCurrencyTo(toUSD);
+        }
     }
 
     public ConverterPage clickAndChooseCurrencyFromTo(String currencyFrom, String currencyTo){

@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import utils.ConfigProperties;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,13 +14,16 @@ public class ConverterPageTest {
     private WebDriver driver;
     private ConverterPage convertpage;
 
-
     @Before
-    public void setUp(){
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/webdrivers/chromedriver.exe");
-//        System.setProperty("webdriver.gecko.driver", "src/main/resources/webdrivers/geckodriver.exe");
-//        driver = new FirefoxDriver();
-        driver = new ChromeDriver();
+    public void setUp() {
+        String browser = ConfigProperties.getProperty("browser");
+        if (browser.equals("Chrome")) {
+            System.setProperty("webdriver.chrome.driver", "src/main/resources/webdrivers/chromedriver.exe");
+            driver = new ChromeDriver();
+        } else {
+            System.setProperty("webdriver.gecko.driver", "src/main/resources/webdrivers/geckodriver.exe");
+            driver = new FirefoxDriver();
+        }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get("http://www.sberbank.ru/ru/quotes/converter");
