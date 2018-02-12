@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class ConverterPage {
     private WebDriver driver;
@@ -111,8 +113,17 @@ public class ConverterPage {
     }
 
     public String changeSymbol(String needToChange) { //замена символа с "," на "."
-        String newValue = needToChange.replace(",", ".");
-        return newValue;
+        return needToChange.replace(",", ".");
+    }
+
+    public String changeResultFormat(Double result){
+        Locale locale = new Locale("ru", "RU");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
+//        symbols.setDecimalSeparator(',');
+        symbols.setGroupingSeparator(' ');
+        String pattern = "#,##0.00";
+        DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
+        return decimalFormat.format(result);
     }
 
     public String getGraphCHF() { //название графика при выборе CHF
@@ -145,22 +156,19 @@ public class ConverterPage {
         Double sum = Double.parseDouble(getSumWithoutSpace());
         if (currencyFrom == "RUB" && currencyTo != "RUB") { //если конвертируем из RUB в иностранную валюту
             Double result = sum / sale;
-            String doubleResult= new DecimalFormat("#0.00").format(result);
-            return changeSymbol(doubleResult);
+            return changeResultFormat(result);
         } else if (currencyFrom != "RUB" && currencyTo != "RUB") { //если конвертируем из иностранной валюты в иностранную
             String getBuyPriceInternationalWithPoint = changeSymbol(getBuyPriceInernational());
             String getSalePriceInternationalWithPoint = changeSymbol(getSalePriceInernational());
             Double buyInternational = Double.parseDouble(getBuyPriceInternationalWithPoint);
             Double saleInternational = Double.parseDouble(getSalePriceInternationalWithPoint);
             Double result = sum * buyInternational / saleInternational;
-            String doubleResult= new DecimalFormat("#0.00").format(result);
-            return changeSymbol(doubleResult);
+            return changeResultFormat(result);
         } else { // если конвертируем из иностранной в RUB
             String getBuyPriceWithPoint = changeSymbol(getBuyPrice());
             Double buy = Double.parseDouble(getBuyPriceWithPoint);
             Double result = sum * buy;
-            String doubleResult= new DecimalFormat("#0.00").format(result);
-            return changeSymbol(doubleResult);
+            return changeResultFormat(result);
         }
     }
 
@@ -168,7 +176,6 @@ public class ConverterPage {
         WebElement sumValue = driver.findElement(sum);
         sumValue.sendKeys(Keys.CONTROL, "a");
         sumValue.sendKeys(Keys.BACK_SPACE);
-//        sumValue.sendKeys("\b\b\b");
         sumValue.sendKeys(number);
         return this;
     }

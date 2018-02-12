@@ -75,10 +75,7 @@ public class ConverterPageTest {
     public void getResultTest(){
         String sum = "9999,99";
         convertpage.enterSumAndSend(sum);
-        String expected = convertpage.changeSymbol(convertpage.getResult());
-        Assert.assertEquals(expected, convertpage.getSumCalc("RUB","USD") + " " + convertpage.getCurrencyToValue()); //actual = конвертировать Double обратно в String + прибавить к нему значение валюты
-//        System.out.println("ОР: " + expected);
-//        System.out.println("ФР: " + convertpage.getSumCalc("RUB","USD") + " " + convertpage.getCurrencyToValue());
+        Assert.assertEquals(convertpage.getResult(), convertpage.getSumCalc("RUB","USD") + " " + convertpage.getCurrencyToValue()); //actual = конвертировать Double обратно в String + прибавить к нему значение валюты
     }
 
     @Test
@@ -87,8 +84,7 @@ public class ConverterPageTest {
         String currencyTo = "EUR";
         convertpage.clickAndChooseCurrencyTo(currencyTo);
         convertpage.enterSumAndSend("917.21");
-        String expected = convertpage.changeSymbol(convertpage.getResult());
-        Assert.assertEquals(expected, convertpage.getSumCalc("RUB", currencyTo) + " " + convertpage.getCurrencyToValue());
+        Assert.assertEquals(convertpage.getResult(), convertpage.getSumCalc("RUB", currencyTo) + " " + convertpage.getCurrencyToValue());
     }
 
     @Test
@@ -96,9 +92,8 @@ public class ConverterPageTest {
     public void convertCurrencyFromToRUBTest(){
         String currencyFrom = "USD";
         convertpage.clickAndChooseCurrencyFromTo(currencyFrom, "RUB");
-        convertpage.enterSumAndSend("13");
-        String expected = convertpage.changeSymbol(convertpage.getResult());
-        Assert.assertEquals(expected, convertpage.getSumCalc(currencyFrom,"RUB") + " " + convertpage.getCurrencyToValue());
+        convertpage.enterSumAndSend("1003.87");
+        Assert.assertEquals(convertpage.getResult(), convertpage.getSumCalc(currencyFrom,"RUB") + " " + convertpage.getCurrencyToValue());
     }
 
     @Test
@@ -108,8 +103,7 @@ public class ConverterPageTest {
         String currencyTo = "EUR";
         convertpage.clickAndChooseCurrencyFromTo(currencyFrom, currencyTo);
         convertpage.enterSumAndSend("218");
-        String expected = convertpage.changeSymbol(convertpage.getResult());
-        Assert.assertEquals(expected, convertpage.getSumCalc(currencyFrom, currencyTo) + " " + convertpage.getCurrencyToValue());
+        Assert.assertEquals(convertpage.getResult(), convertpage.getSumCalc(currencyFrom, currencyTo) + " " + convertpage.getCurrencyToValue());
     }
 
     @Test
@@ -127,7 +121,7 @@ public class ConverterPageTest {
     public void clickButtonTest(){
         convertpage.clickButton();
         Assert.assertEquals("Вы получите:", convertpage.getYouGetText());
-//        System.out.println(convertpage.getYouGetText() + " " +  convertpage.getEnteredSum() + " " + convertpage.getResult());
+        System.out.println(convertpage.getYouGetText() + " " +  convertpage.getEnteredSum() + " " + convertpage.getResult());
     }
 
     @Test
