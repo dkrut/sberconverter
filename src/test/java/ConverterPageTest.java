@@ -1,4 +1,8 @@
 import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,37 +36,37 @@ public class ConverterPageTest {
     }
 
     @Test
-    @Description("Проверка названия страницы")
+    @DisplayName("Проверка названия страницы")
     public void headerTest(){
         Assert.assertEquals("Калькулятор иностранных валют", convertpage.getHeader());
     }
 
     @Test
-    @Description("Проверка названия Калькулятора")
+    @DisplayName("Проверка названия Калькулятора")
     public void filterTitleTest(){
         Assert.assertEquals("Конвертация", convertpage.getfilterTitle());
     }
 
     @Test
-    @Description("Проверка значения по умолчанию в поле 'Сумма'")
+    @DisplayName("Проверка значения по умолчанию в поле 'Сумма'")
     public void defaultSumTest(){
         Assert.assertEquals("100", convertpage.getSum());
     }
 
     @Test
-    @Description("'Конвертировать Из' по умолчанию")
+    @DisplayName("'Конвертировать Из' по умолчанию")
     public void defaultCurrencyFromTest(){
         Assert.assertEquals("RUB", convertpage.getCurrencyFromValue());
     }
 
     @Test
-    @Description("'Конвертировать В' по умолчанию")
+    @DisplayName("'Конвертировать В' по умолчанию")
     public void defaultCurrencyToTest(){
         Assert.assertEquals("USD", convertpage.getCurrencyToValue());
     }
 
     @Test
-    @Description("тест выбора валюты из <...> в <...>")
+    @DisplayName("тест выбора валюты из <...> в <...>")
     public void chooseCurrencyFromToTest(){
         String currencyFrom = "JPY";
         String currencyTo = "GBP";
@@ -72,7 +76,7 @@ public class ConverterPageTest {
     }
 
     @Test
-    @Description("Проверка результата конвертации с валютой по умолчанию from RUB to USD")
+    @DisplayName("Проверка результата конвертации с валютой по умолчанию from RUB to USD")
     public void getResultTest(){
         String sum = "9999,99";
         convertpage.enterSumAndSend(sum);
@@ -80,7 +84,7 @@ public class ConverterPageTest {
     }
 
     @Test
-    @Description("Конвертация валюты из RUB в <...>")
+    @DisplayName("Конвертация валюты из RUB в <...>")
     public void convertCurrencyFromRUBToTest(){
         String currencyTo = "EUR";
         convertpage.clickAndChooseCurrencyTo(currencyTo);
@@ -89,7 +93,7 @@ public class ConverterPageTest {
     }
 
     @Test
-    @Description("Конвертация валюты из <...> в RUB")
+    @DisplayName("Конвертация валюты из <...> в RUB")
     public void convertCurrencyFromToRUBTest(){
         String currencyFrom = "USD";
         convertpage.clickAndChooseCurrencyFromTo(currencyFrom, "RUB");
@@ -98,7 +102,7 @@ public class ConverterPageTest {
     }
 
     @Test
-    @Description("Конвертация валюты из <...> в <...>")
+    @DisplayName("Конвертация валюты из <...> в <...>")
     public void convertCurrencyFromToTest(){
         String currencyFrom = "GBP";
         String currencyTo = "EUR";
@@ -108,7 +112,7 @@ public class ConverterPageTest {
     }
 
     @Test
-    @Description("Получение названия графиков") //сделать метод в ConvertPage, чтобы сразу получать название графика
+    @DisplayName("Получение названия графиков") //сделать метод в ConvertPage, чтобы сразу получать название графика
     public void graphNameTest(){
         String fromCurrency = "Фунт стерлингов Соединенного Королевства";
         String toCurrency = "Евро";
@@ -118,16 +122,15 @@ public class ConverterPageTest {
     }
 
     @Test
-    @Description("Клик на кнопку 'Показать'")
+    @DisplayName("Клик на кнопку 'Показать'")
     public void clickButtonTest(){
-//        convertpage.closeCookiesMessage();
         convertpage.clickButton();
         Assert.assertEquals("Вы получите:", convertpage.getYouGetText());
         System.out.println(convertpage.getYouGetText() + " " +  convertpage.getEnteredSum() + " " + convertpage.getResult());
     }
 
     @Test
-    @Description("Открыть таблицу изменения котировок выбранной валюты")
+    @DisplayName("Открыть таблицу изменения котировок выбранной валюты")
     public void openTableQuotationsChangeTest(){
         String currencyTo = "EUR";
         convertpage.clickAndChooseCurrencyTo(currencyTo);
@@ -136,7 +139,7 @@ public class ConverterPageTest {
     }
 
     @Test
-    @Description("Недоступен ввод символов, кроме цифр и точки/запятой")
+    @DisplayName("Недоступен ввод символов, кроме цифр и точки/запятой")
     public void inputValidationTest(){
         String sum = "1,4";
         convertpage.enterSum("!@#$%^&*()-+№;%:?_=" + sum);
