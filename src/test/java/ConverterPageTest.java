@@ -28,6 +28,7 @@ public class ConverterPageTest {
         driver.manage().window().maximize();
         driver.get("http://www.sberbank.ru/ru/quotes/converter");
         convertpage = new ConverterPage(driver);
+        convertpage.closeCookiesMessage(); //закрыть сообщение об использовании cookie (фэйлит половину тестов, не даёт кликать на элементы)
     }
 
     @Test
@@ -119,6 +120,7 @@ public class ConverterPageTest {
     @Test
     @Description("Клик на кнопку 'Показать'")
     public void clickButtonTest(){
+//        convertpage.closeCookiesMessage();
         convertpage.clickButton();
         Assert.assertEquals("Вы получите:", convertpage.getYouGetText());
         System.out.println(convertpage.getYouGetText() + " " +  convertpage.getEnteredSum() + " " + convertpage.getResult());

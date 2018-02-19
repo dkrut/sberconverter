@@ -6,13 +6,13 @@ import java.util.Properties;
 public class ConfigProperties {
 
     protected static FileInputStream fileInputStream;
-    protected static Properties PROPERTIES;
+    protected static Properties properties;
 
     static {
         try {
             fileInputStream = new FileInputStream("src/main/resources/config.properties");
-            PROPERTIES = new Properties();
-            PROPERTIES.load(fileInputStream);
+            properties = new Properties();
+            properties.load(fileInputStream);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -26,6 +26,6 @@ public class ConfigProperties {
     }
 
     public static String getProperty(String key) {
-        return PROPERTIES.getProperty(key);
+        return properties.getProperty(key);
     }
 }

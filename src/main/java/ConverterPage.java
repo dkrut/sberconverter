@@ -172,6 +172,11 @@ public class ConverterPage {
         }
     }
 
+    public ConverterPage closeCookiesMessage() { //закрыть сообщение об использовании cookies(мешает нажать на кнопку "Показать")
+        driver.findElement(closeCookiesMessage).click();
+        return this;
+    }
+
     public ConverterPage enterSum(String number) { //ввести значение поля "Сумма" (не всегда очищает с первого раза, поэтому используется Ctrl+a и нажатие Backspace, чтобы удалить значение по умолчанию "100")
         WebElement sumValue = driver.findElement(sum);
         sumValue.sendKeys(Keys.CONTROL, "a");
@@ -187,7 +192,6 @@ public class ConverterPage {
     }
 
     public ConverterPage clickButton() { //нажать на "Показать"
-        driver.findElement(closeCookiesMessage).click(); //закрыть сообщение об использовании cookies(мешает нажать на кнопку "Показать")
         driver.findElement(button).click();
         return this;
     }
