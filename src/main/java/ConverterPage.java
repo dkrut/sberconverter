@@ -218,36 +218,24 @@ public class ConverterPage {
 
     public ConverterPage clickAndChooseCurrencyFrom(String currencyFrom) { //поправить метод для случаев, если добавится новая валюта
         clickCurrencyFromField();
-        if (currencyFrom == "RUB") {
-            return chooseCurrencyFrom(fromRUB);
-        } else if (currencyFrom == "CHF") {
-            return chooseCurrencyFrom(fromCHF);
-        } else if (currencyFrom == "EUR") {
-            return chooseCurrencyFrom(fromEUR);
-        } else if (currencyFrom == "GBP") {
-            return chooseCurrencyFrom(fromGBP);
-        } else if (currencyFrom == "JPY") {
-            return chooseCurrencyFrom(fromJPY);
-        } else {
-            return chooseCurrencyFrom(fromUSD);
-        }
+        if (currencyFrom == "RUB") chooseCurrencyFrom(toRUB);
+        if (currencyFrom == "CHF") chooseCurrencyFrom(toCHF);
+        if (currencyFrom == "EUR") chooseCurrencyFrom(toEUR);
+        if (currencyFrom == "GBP") chooseCurrencyFrom(toGBP);
+        if (currencyFrom == "JPY") chooseCurrencyFrom(toJPY);
+        if (currencyFrom == "USD") chooseCurrencyFrom(toUSD);
+        return this;
     }
 
     public ConverterPage clickAndChooseCurrencyTo(String currencyTo) { //поправить метод для случаев, если добавится новая валюта
         clickCurrencyToField();
-        if (currencyTo == "RUB") {
-            return chooseCurrencyTo(toRUB);
-        } else if (currencyTo == "CHF") {
-            return chooseCurrencyTo(toCHF);
-        } else if (currencyTo == "EUR") {
-            return chooseCurrencyTo(toEUR);
-        } else if (currencyTo == "GBP") {
-            return chooseCurrencyTo(toGBP);
-        } else if (currencyTo == "JPY") {
-            return chooseCurrencyTo(toJPY);
-        } else {
-            return chooseCurrencyTo(toUSD);
-        }
+        if (currencyTo == "RUB") chooseCurrencyTo(toRUB);
+        if (currencyTo == "CHF") chooseCurrencyTo(toCHF);
+        if (currencyTo == "EUR") chooseCurrencyTo(toEUR);
+        if (currencyTo == "GBP") chooseCurrencyTo(toGBP);
+        if (currencyTo == "JPY") chooseCurrencyTo(toJPY);
+        if (currencyTo == "USD") chooseCurrencyTo(toUSD);
+        return this;
     }
 
     public ConverterPage clickAndChooseCurrencyFromTo(String currencyFrom, String currencyTo){

@@ -24,8 +24,14 @@ public class ConverterPageTest {
         if (browser.equals("Chrome")) {
             System.setProperty("webdriver.chrome.driver", "src/main/resources/webdrivers/chromedriver.exe");
             driver = new ChromeDriver();
-        } else {
+        } else if (browser.equals("Firefox")) {
             System.setProperty("webdriver.gecko.driver", "src/main/resources/webdrivers/geckodriver.exe");
+            driver = new FirefoxDriver();
+        } else if (browser.equals("Chrome_linux")) {
+            System.setProperty("webdriver.chrome.driver", "src/main/resources/webdrivers/chromedriver");
+            driver = new ChromeDriver();
+        } else {
+            System.setProperty("webdriver.gecko.driver", "src/main/resources/webdrivers/geckodriver");
             driver = new FirefoxDriver();
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
