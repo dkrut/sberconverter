@@ -1,4 +1,4 @@
-package utils;
+package org.bitbucket.dkrut.utils;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -10,7 +10,7 @@ public class ConfigProperties {
 
     static {
         try {
-            fileInputStream = new FileInputStream("src/main/resources/config.properties");
+            fileInputStream = new FileInputStream("src/test/java/org/bitbucket/dkrut/resources/config.properties");
             properties = new Properties();
             properties.load(fileInputStream);
         } catch (IOException e) {

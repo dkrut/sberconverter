@@ -1,8 +1,7 @@
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Step;
+package org.bitbucket.dkrut.tests;
+
 import io.qameta.allure.junit4.DisplayName;
+import org.bitbucket.dkrut.pages.ConverterPage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,7 +9,7 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import utils.ConfigProperties;
+import org.bitbucket.dkrut.utils.ConfigProperties;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,16 +21,16 @@ public class ConverterPageTest {
     public void setUp() {
         String browser = ConfigProperties.getProperty("browser");
         if (browser.equals("Chrome")) {
-            System.setProperty("webdriver.chrome.driver", "src/main/resources/webdrivers/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "src/test/java/org/bitbucket/dkrut/resources/webdrivers/chromedriver.exe");
             driver = new ChromeDriver();
         } else if (browser.equals("Firefox")) {
-            System.setProperty("webdriver.gecko.driver", "src/main/resources/webdrivers/geckodriver.exe");
+            System.setProperty("webdriver.gecko.driver", "src/test/java/org/bitbucket/dkrut/resources/webdrivers/geckodriver.exe");
             driver = new FirefoxDriver();
         } else if (browser.equals("Chrome_linux")) {
-            System.setProperty("webdriver.chrome.driver", "src/main/resources/webdrivers/chromedriver");
+            System.setProperty("webdriver.chrome.driver", "src/test/java/org/bitbucket/dkrut/resources/webdrivers/chromedriver");
             driver = new ChromeDriver();
         } else {
-            System.setProperty("webdriver.gecko.driver", "src/main/resources/webdrivers/geckodriver");
+            System.setProperty("webdriver.gecko.driver", "src/test/java/org/bitbucket/dkrut/resources/webdrivers/geckodriver");
             driver = new FirefoxDriver();
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
